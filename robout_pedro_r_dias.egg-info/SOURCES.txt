@@ -1,8 +1,0 @@
-README.md
-setup.py
-robout/__init__.py
-robout/robout_scaler.py
-robout_pedro_r_dias.egg-info/PKG-INFO
-robout_pedro_r_dias.egg-info/SOURCES.txt
-robout_pedro_r_dias.egg-info/dependency_links.txt
-robout_pedro_r_dias.egg-info/top_level.txt
