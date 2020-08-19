@@ -1,3 +1,10 @@
-
-tests/.ipynb_checkpoints/test_robout-checkpoint.py
-.ipynb_checkpoints/robout_scaler-checkpoint.ipynb
+.ipynb_checkpoints/
+.pytest_cache/
+robout_pedro_r_dias.egg-info/
+tests/.pytest_cache
+tests/.ipynb_checkpoints
+tests/__pycache__
+robout/.ipynb_checkpoints
+robout/__pycache__
+resources/.ipynb_checkpoints
+resources/__pycache__
