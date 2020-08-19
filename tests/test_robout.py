@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import time
 
-df = pd.read_csv(".\\testSample.csv")
+df = pd.read_csv(".\\tests\\testSample.csv")
 
 def transformNoStd(df):
     import robout as rbt
@@ -54,7 +54,7 @@ def test_transformNoStd_answer():
     test the scaling result when the standardization parameter is false.
     """
     df1 = transformNoStd(df).iloc[:,2:]
-    df2 = pd.read_csv(".\\nStdTestSample.csv").iloc[:,2:]
+    df2 = pd.read_csv(".\\tests\\nStdTestSample.csv").iloc[:,2:]
     pd.testing.assert_frame_equal(np.round((df1-df1.mean())/df1.std(),1), 
                                   np.round((df2-df1.mean())/df2.std(),1), 
                                   check_dtype=False, check_exact=False)
@@ -65,7 +65,7 @@ def test_fitTransformStd_answer():
     the fit_transform method output.
     """
     df1 = transformStd(df).iloc[:,2:]
-    df2 = pd.read_csv(".\\stdTestSample.csv").iloc[:,2:]
+    df2 = pd.read_csv(".\\tests\\stdTestSample.csv").iloc[:,2:]
     pd.testing.assert_frame_equal(np.round((df1-df1.mean())/df1.std(),1), 
                                   np.round((df2-df1.mean())/df2.std(),1), 
                                   check_dtype=False, check_exact=False)
@@ -84,8 +84,8 @@ def test_invTransformStd_answer():
     """
     test the inverse_transform method output.
     """    
-    df1 = invTransformStd(df,pd.read_csv(".\\stdTestSample.csv")).iloc[:,2:]
-    df2 = pd.read_csv(".\\recTestSample.csv").iloc[:,2:]
+    df1 = invTransformStd(df,pd.read_csv(".\\tests\\stdTestSample.csv")).iloc[:,2:]
+    df2 = pd.read_csv(".\\tests\\recTestSample.csv").iloc[:,2:]
     pd.testing.assert_frame_equal(np.round((df1-df1.mean())/df1.std(),1), 
                                   np.round((df2-df1.mean())/df2.std(),1), 
                                   check_dtype=False, check_exact=False)
