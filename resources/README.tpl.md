@@ -2,11 +2,11 @@
 
 > Robust scaling for numeric data with outliers
 
-Welcome! This repository contains the code implementing a scaler preserving the outliers 
-found in the unscaled data. It does not discard any outliers, it transforms them to an 
-acceptable proximity in relation to the higher density region in the scaled distribution. 
-It does that by applying sigmoid transformation after data rescaling using a Robust Scaler
-as implemented in [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html): 
+Welcome! This repository contains the code implementing a scaler preserving outliers 
+found in unscaled data. It does not discard outliers, it transforms them to an 
+acceptable proximity in relation to the higher density region of the scaled distribution. 
+It does that by applying sigmoid transformation after an initial data scaling using the 
+Robust Scaler as implemented in [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html): 
 *(x-median)/(percentile(uppq)-percentile(lowq)*.
  
 Thus, between *lowq* and *uppq* parameters, this scaling preserves linearity, whereas outsite, 

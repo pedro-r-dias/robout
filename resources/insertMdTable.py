@@ -23,17 +23,17 @@ def insertMdTable(dfin, name, mdtext, plot=False, transpose=False, maxcols=10):
             table.index.name = ' '
             table = table.reset_index()
             try:
-                table = table.to_markdown(floatfmt="0.12g", showindex=False)
+                table = table.to_markdown(floatfmt="0.12g", index=False)
             except:
-                table = tabulate(table, table.columns, floatfmt="0.12g", tablefmt='pipe', showindex=False)
+                table = tabulate(table, table.columns, floatfmt="0.12g", tablefmt='pipe', index=False)
         else:
             df = dfin.iloc[:,(i*maxcols):(min([(i+1)*maxcols,dfin.shape[1]]))]
             if i<nc-1:
                 df['...'] = ''
             try:
-                table = df.to_markdown(floatfmt="0.12g", showindex=False)
+                table = df.to_markdown(floatfmt="0.12g", index=False)
             except:
-                table = tabulate(df, df.columns, floatfmt="0.12g", tablefmt='pipe', showindex=False)
+                table = tabulate(df, df.columns, floatfmt="0.12g", tablefmt='pipe', index=False)
             
             table = table+'\n'
         
