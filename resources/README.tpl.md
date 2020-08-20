@@ -37,7 +37,7 @@ table3.table
 
 ## Installation
 
-The latest release of Robout can be installed from [PyPI](https://test.pypi.org/project/robout-pedro-r-dias/0.0.1/) using ``pip``:
+The latest release of Robout can be installed from [PyPI](https://pypi.org/project/robout/0.0.1/) using ``pip``:
 
 ```sh
     pip install robout

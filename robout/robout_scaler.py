@@ -9,6 +9,7 @@ class robout_scaler:
     Thus, between lowq and uppq, this scaling preserves linearity.
     Lastly if standardization==True, the data is centered and standard 
     deviation is set to 1.
+	Code available at https://github.com/pedro-r-dias/robout
     
     Attributes
     ----------
