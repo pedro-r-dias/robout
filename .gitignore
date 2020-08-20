@@ -1,5 +1,6 @@
 .ipynb_checkpoints/
 .pytest_cache/
+robout.egg-info/
 robout_pedro_r_dias.egg-info/
 tests/.pytest_cache
 tests/.ipynb_checkpoints
@@ -10,3 +11,4 @@ robout-pedro-r-dias/
 resources/.ipynb_checkpoints
 resources/__pycache__
 hints.txt
+conda/

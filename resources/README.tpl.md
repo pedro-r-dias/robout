@@ -40,13 +40,13 @@ table3.table
 The latest release of Robout can be installed from [PyPI](https://test.pypi.org/project/robout-pedro-r-dias/0.0.1/) using ``pip``:
 
 ```sh
-    pip install -i https://test.pypi.org/simple/ robout-pedro-r-dias
+    pip install robout
 ```
 
 Or via conda:
 
 ```sh
-    conda install -c robout-pedro-r-dias-0.0.1-py38_0.tar.bz2 robout-pedro-r-dias
+    conda install -c pedro-r-dias robout
 ```
 
 
