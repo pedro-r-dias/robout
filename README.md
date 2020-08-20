@@ -2,18 +2,19 @@
 
 > Robust scaling for numeric data with outliers
 
-Welcome. This repository contains the code implementing a scaler preserving the outliers 
-found in the unscaled data outliers also in the scaled data, but transforms them to an 
+Welcome! This repository contains the code implementing a scaler preserving the outliers 
+found in the unscaled data. It does not discard any outliers, it transforms them to an 
 acceptable proximity in relation to the higher density region in the scaled distribution. 
-It does that by applying sigmoid transformation after data rescaling using the RobustScaler: 
-$$(x-median)/(percentile(uppq)-percentile(lowq)$$
+It does that by applying sigmoid transformation after data rescaling using the [RobustScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html): 
+>(x-median)/(percentile(uppq)-percentile(lowq)
  
 Thus, between *lowq* and *uppq* parameters, this scaling preserves linearity outsite it 
 makes a non-linear transformation pushing the outliers to the linear region. Lastly if 
-standardization==True, the data is centered and standard deviation is set to 1.
+*standardization* parameter is set to **True**, the data is centered and standard deviation is 
+forced to 1.
 
-Follows a small sample from the ./tests/testSample.csv file and a violin plot of the first 8
-variables before scaling.
+Follows a small sample (first 5rows x 8cols) from the [testSample.csv](./tests/testSample.csv) file and a 
+violin plot of the first 8 variables before scaling.
 
 | id                    |       time |    AA |   AB |   AC |    AD |       AE |   AF |   AG |    AH |
 |:----------------------|-----------:|------:|-----:|-----:|------:|---------:|-----:|-----:|------:|
@@ -24,12 +25,10 @@ variables before scaling.
 | x16587885833987648653 | 1515186000 | 10395 | -119 | -120 | 0.944 | 0.069466 | 1943 |    0 | 0     |
 
 
-![Violin plots of scaled test data](https://github.com/pedro-r-dias/robout/tree/master/resources/fig1.png)
+![Violin plots of scaled test data](./resources/fig1.png)
 
 
 After the robout scaling (without standardization) the same sample and the violin plots look as follows:
-and the same sample after 
-scaling, first without standardization, next after standardization.
 
 | id                    |       time |    AA |    AB |    AC |    AD |    AE |    AF |    AG |    AH |
 |:----------------------|-----------:|------:|------:|------:|------:|------:|------:|------:|------:|
@@ -40,7 +39,7 @@ scaling, first without standardization, next after standardization.
 | x16587885833987648653 | 1515186000 | 0.694 | 0.447 | 0.443 | 0.538 | 0.574 | 0.581 | 0.469 | 0.474 |
 
 
-![Violin plots of scaled test data](https://github.com/pedro-r-dias/robout/tree/master/resources/fig2.png)
+![Violin plots of scaled test data](./resources/fig2.png)
 
 After applying standardization, this is the result:
 
@@ -53,9 +52,7 @@ After applying standardization, this is the result:
 | x16587885833987648653 | 1515186000 |  1.786 | -0.659 | -0.651 |  0.574 |  0.401 |  0.675 | -0.544 | -0.562 |
 
 
-![Violin plots of scaled and standardized test data](https://github.com/pedro-r-dias/robout/tree/master/resources/fig3.png)
-
-
+![Violin plots of scaled and standardized test data](./resources/fig3.png)
 
 
 ## Installation
@@ -83,7 +80,7 @@ f, ax = plt.subplots(figsize=(20, 5))
 sns.violinplot(data=scaled.iloc[:,2:10])
 ```
 
-![Violin plots of scaled and standardized test data](https://github.com/pedro-r-dias/robout/tree/master/resources/fig3.png)
+![Violin plots of scaled and standardized test data](./resources/fig3.png)
 
 To revert the scaling use the inverse_transform method as follows:
 
@@ -99,8 +96,6 @@ unscaled.iloc[:5,:10]
 | x18350715752638066598 | 1515006000 |    75 | -108 |  -99 | 0.427 | 0.033111 |  149 |   92 |  0.125 |
 | x10230558070004111555 | 1515150000 |  2967 | -118 | -119 | 0.944 | 0.021121 | 1420 |    1 |  0.001 |
 | x16587885833987648653 | 1515186000 | 10395 | -119 | -120 | 0.944 | 0.069466 | 1943 |    0 | -0     |
-
-
 
 
 
