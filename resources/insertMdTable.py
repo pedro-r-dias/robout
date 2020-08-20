@@ -40,8 +40,7 @@ def insertMdTable(dfin, name, mdtext, plot=False, transpose=False, maxcols=10):
         if i!=nc-1:
             tmp_mdtxt = tmp_mdtxt + table.replace("|\n","\n") + "\n\n"
         else:
-            transp = "transposed " if transpose else ""
-            tmp_mdtxt = "Table: "+transp+"sample from "+name+".csv file. \\label{table:"+name+"}\n\n" + tmp_mdtxt + table
+            tmp_mdtxt = tmp_mdtxt + table
 
     mdtext = mdtext.replace(name+'.table', tmp_mdtxt)
     

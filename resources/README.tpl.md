@@ -1,59 +1,97 @@
+# Robout scaler
 
-This scaler preserves outliers found in the unscaled data as 
-outliers also in the scaled data, but transforms them to an 
-acceptable proximity in relation to the higher density region 
-in the scaled distribution. It does that by applying sigmoid 
-transformation after data rescaling using the RobustScaler: 
-       (x-median)/(percentile(uppq)-percentile(lowq).
-Thus, between lowq and uppq, this scaling preserves linearity.
-Lastly if standardization==True, the data is centered and standard 
-deviation is set to 1.
+> Robust scaling for numeric data with outliers
 
-Attributes
-----------
-uppq : float
-    a value between 0 and 1 defining the upper quantile expected 
-    to include outliers.
+Welcome. This repository contains the code implementing a scaler preserving the outliers 
+found in the unscaled data outliers also in the scaled data, but transforms them to an 
+acceptable proximity in relation to the higher density region in the scaled distribution. 
+It does that by applying sigmoid transformation after data rescaling using the RobustScaler: 
+$$(x-median)/(percentile(uppq)-percentile(lowq)$$
+ 
+Thus, between *lowq* and *uppq* parameters, this scaling preserves linearity outsite it 
+makes a non-linear transformation pushing the outliers to the linear region. Lastly if 
+standardization==True, the data is centered and standard deviation is set to 1.
 
-lowq : float
-    a value between 0 and 1 defining the lower quantile expected 
-    to include outliers.
-
-standardization : boolean
-    a boolean flag indicating if standardization, meaning the
-    forcing of the mean to 0 and the standard deviation to 1, should 
-    be undertaken.
-
-ignore : list
-    list of column names from the input dataframe that shall not be 
-    scaled due to whatever reason.
-
-Methods
--------
-fit_transform(df)
-    It returns the scaled input dataframe and functions to scale and 
-    unscale dataframes transforming the data to its original units.
-    When unscaling, inf and -inf values are transformed back to, 
-    respectively, the median of those greater than the uppq percentile 
-    and the median of those lower than the lowq percentile.
-
-    Executing the fit_transform also generates the logic of the transform 
-    and inverse_transform methods
-
-transform(data)
-    Transformation scaling the data according to the parameterization of
-    the robout_scaler instance.
-
-inverse_transform(data)
-    Inverse transformation to go back to the original units.
-    When unscaling, inf and -inf values are transformed back to, 
-    respectively, the median of those greater than the uppq percentile 
-    and the median of those lower than the lowq percentile.
+Follows a small sample from the ./tests/testSample.csv file and a violin plot of the first 8
+variables before scaling.
 
 table1.table
 
+![Violin plots of scaled test data](https://github.com/pedro-r-dias/robout/tree/master/resources/fig1.png)
+
+
+After the robout scaling (without standardization) the same sample and the violin plots look as follows:
+and the same sample after 
+scaling, first without standardization, next after standardization.
+
 table2.table
+
+![Violin plots of scaled test data](https://github.com/pedro-r-dias/robout/tree/master/resources/fig2.png)
+
+After applying standardization, this is the result:
 
 table3.table
 
+![Violin plots of scaled and standardized test data](https://github.com/pedro-r-dias/robout/tree/master/resources/fig3.png)
+
+
+
+
+## Installation
+
+```sh
+pip install -i https://test.pypi.org/simple/ robout-pedro-r-dias
+```
+
+## Usage example
+
+Follows a data scaling example using *fit_transform* (robout also includes the *transform* method). 
+
+```python
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import robout as rbt
+
+df = pd.read_csv(".\\tests\\testSample.csv")
+
+rs = rbt.robout_scaler(standardization=True, ignore=["time"])
+scaled = rs.fit_transform(df)
+
+f, ax = plt.subplots(figsize=(20, 5))
+sns.violinplot(data=scaled.iloc[:,2:10])
+```
+
+![Violin plots of scaled and standardized test data](https://github.com/pedro-r-dias/robout/tree/master/resources/fig3.png)
+
+To revert the scaling use the inverse_transform method as follows:
+
+```python
+unscaled = rs.inverse_transform(scaled)
+unscaled.iloc[:5,:10]
+```
+
 table4.table
+
+
+
+
+## Release History
+
+* 0.0.1
+    * Work in progress
+
+## Meta
+
+Pedro Dias – pedroruivodias@gmail.com
+
+Distributed under the MIT license. See ``LICENSE`` for more information.
+
+
+## Contributing
+
+1. Fork it (<https://github.com/yourname/yourproject/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
