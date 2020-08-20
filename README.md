@@ -5,13 +5,14 @@
 Welcome! This repository contains the code implementing a scaler preserving the outliers 
 found in the unscaled data. It does not discard any outliers, it transforms them to an 
 acceptable proximity in relation to the higher density region in the scaled distribution. 
-It does that by applying sigmoid transformation after data rescaling using the [RobustScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html): 
->(x-median)/(percentile(uppq)-percentile(lowq)
+It does that by applying sigmoid transformation after data rescaling using a Robust Scaler
+as implemented in [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html): 
+*(x-median)/(percentile(uppq)-percentile(lowq)*.
  
-Thus, between *lowq* and *uppq* parameters, this scaling preserves linearity outsite it 
-makes a non-linear transformation pushing the outliers to the linear region. Lastly if 
+Thus, between *lowq* and *uppq* parameters, this scaling preserves linearity, whereas outsite, 
+it makes a non-linear transformation pushing the outliers to the linear region. Lastly, if 
 *standardization* parameter is set to **True**, the data is centered and standard deviation is 
-forced to 1.
+forced to 1 (the [standard scaling](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) procedure).
 
 Follows a small sample (first 5rows x 8cols) from the [testSample.csv](./tests/testSample.csv) file and a 
 violin plot of the first 8 variables before scaling.
@@ -28,7 +29,7 @@ violin plot of the first 8 variables before scaling.
 ![Violin plots of scaled test data](./resources/fig1.png)
 
 
-After the robout scaling (without standardization) the same sample and the violin plots look as follows:
+After the Robout scaling (without standardization) the same sample and the violin plots look as follows:
 
 | id                    |       time |    AA |    AB |    AC |    AD |    AE |    AF |    AG |    AH |
 |:----------------------|-----------:|------:|------:|------:|------:|------:|------:|------:|------:|
@@ -57,13 +58,22 @@ After applying standardization, this is the result:
 
 ## Installation
 
+The latest release of Robout can be installed from [PyPI](https://test.pypi.org/project/robout-pedro-r-dias/0.0.1/) using ``pip``:
+
 ```sh
-pip install -i https://test.pypi.org/simple/ robout-pedro-r-dias
+    pip install -i https://test.pypi.org/simple/ robout-pedro-r-dias
 ```
+
+Or via conda:
+
+```sh
+    conda install -c robout-pedro-r-dias-0.0.1-py38_0.tar.bz2 robout-pedro-r-dias
+```
+
 
 ## Usage example
 
-Follows a data scaling example using *fit_transform* (robout also includes the *transform* method). 
+Follows a data scaling example using *fit_transform* (Robout also includes the *transform* method). 
 
 ```python
 import pandas as pd
