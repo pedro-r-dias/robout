@@ -3,6 +3,10 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+requirements = [
+    'numpy',
+    'pandas' ]
+	
 setuptools.setup(
     name="robout", 
     version="0.0.1",
@@ -13,6 +17,8 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/pedro-r-dias/robout",
     packages=setuptools.find_packages(),
+	install_requires=requirements,
+	keywords=['robout','scaling','standardization','normalization','outlier'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

@@ -58,7 +58,9 @@ After applying standardization, this is the result:
 
 ## Installation
 
-The latest release of Robout can be installed from [PyPI](https://pypi.org/project/robout/0.0.1/) using ``pip``:
+The installation of Robout scaler requires [Pandas](https://pandas.pydata.org/pandas-docs/stable/getting_started/install.html) and [Numpy](https://numpy.org/install/).
+
+The latest release of Robout scaler can be installed from [PyPI](https://pypi.org/project/robout/0.0.1/) using ``pip``:
 
 ```sh
     pip install robout
@@ -73,7 +75,7 @@ Or via conda:
 
 ## Usage example
 
-Follows a data scaling example using *fit_transform* (Robout also includes the *transform* method). 
+Follows a data scaling example using *fit_transform* (Robout scaler also includes the *transform* method). 
 
 ```python
 import pandas as pd
