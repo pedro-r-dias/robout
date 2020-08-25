@@ -132,6 +132,9 @@ unscaled.iloc[:5,:10]
 ### Fibonacci scaler
 ![Fibonacci scaler](./resources/fig9.png)
 
+### Non-linear (tanh) scaler
+![tanh scaler](./resources/fig10.png)
+
 ## Release History
 
 * 0.1.1
