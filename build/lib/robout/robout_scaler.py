@@ -1,14 +1,16 @@
 class robout_scaler:
     """
-    This scaler preserves outliers found in the unscaled data as 
-    outliers also in the scaled data, but transforms them to an 
-    acceptable proximity in relation to the higher density region 
-    in the scaled distribution. It does that by applying sigmoid 
+    Robout scaler preserves outliers found in the unscaled data. 
+    Such outliers are transformed using a non-linear function to 
+    a controllable proximity in relation to the higher density region 
+    of the scaled distribution. It does that by applying sigmoid 
     transformation after data rescaling using the RobustScaler: 
            (x-median)/(percentile(uppq)-percentile(lowq).
-    Thus, between lowq and uppq, this scaling preserves linearity.
-    Lastly if standardization==True, the data is centered and standard 
-    deviation is set to 1.
+    Thus, between lowq and uppq, the scaling preserves linearity.
+    Lastly if normalization parameter is set to 0, the data is
+    standardized, if set to 1, it is normalized to be between 0 and
+    1, else, if set to 2, it is normalized to be between -1 and 1.
+    Code available at https://github.com/pedro-r-dias/robout
     
     Attributes
     ----------
@@ -20,10 +22,11 @@ class robout_scaler:
         a value between 0 and 1 defining the lower quantile expected 
         to include outliers.
     
-    standardization : boolean
-        a boolean flag indicating if standardization, meaning the
-        forcing of the mean to 0 and the standard deviation to 1, should 
-        be undertaken.
+    normalization : 0, 1 or 2
+        - 0 means standardization will be applied and that means forcing 
+          the mean to 0 and the standard deviation to 1.
+        - 1 means normalization so that all values are between 0 and 1.
+        - 2 means normalization so that all values are between -1 and 1.
         
     ignore : list
         list of column names from the input dataframe that shall not be 
@@ -52,7 +55,7 @@ class robout_scaler:
         and the median of those lower than the lowq percentile.
     """
                            
-    def __init__(self, uppq=0.9, lowq=0.1, standardization=True, ignore=[]):
+    def __init__(self, uppq=0.9, lowq=0.1, normalization=0, ignore=[]):
         """
         Parameters
         ----------
@@ -64,10 +67,11 @@ class robout_scaler:
             a value between 0 and 1 defining the lower quantile expected 
             to include outliers.
 
-        standardization : boolean
-            a boolean flag indicating if standardization, meaning the
-            forcing of the mean to 0 and the standard deviation to 1, should 
-            be undertaken.
+        normalization : 0, 1 or 2
+            - 0 means standardization will be applied and that means forcing 
+              the mean to 0 and the standard deviation to 1.
+            - 1 means normalization so that all values are between 0 and 1.
+            - 2 means normalization so that all values are between -1 and 1.
 
         ignore : list
             list of column names from the input dataframe that shall not be 
@@ -75,23 +79,24 @@ class robout_scaler:
         """
         self.uppq=uppq
         self.lowq=lowq
-        self.standardization=standardization
+        self.normalization=normalization
         self.ignore=ignore
         
     def fit_transform(self, df):
         """
-        This transformation preserves outliers found in the unscaled data 
-        as outliers also in the scaled data, but transforms them to an 
-        acceptable proximity in relation to the higher density region 
-        in the scaled distribution. It does that by applying sigmoid 
-        transformation after data rescaling using the RobustScaler:  
+        Robout scaler preserves outliers found in the unscaled data. 
+        Such outliers are transformed using a non-linear function to 
+        a controllable proximity in relation to the higher density region 
+        of the scaled distribution. It does that by applying sigmoid 
+        transformation after data rescaling using the RobustScaler: 
                (x-median)/(percentile(uppq)-percentile(lowq).
-        Thus, between lowq and uppq, this scaling preserves linearity.
-        Lastly if standardization==True, the data is centered and standard 
-        deviation is set to 1.
+        Thus, between lowq and uppq, the scaling preserves linearity.
+        Lastly if normalization parameter is set to 0, the data is
+        standardized, if set to 1, it is normalized to be between 0 and
+        1, else, if set to 2, it is normalized to be between 0 and 2.
     
-        It returns the scaled input dataframe and functions to scale and 
-        unscale dataframes transforming the data to its original units.
+        The function returns the scaled dataframe and functions to scale 
+        and unscale dataframes transforming the data to its original units.
         When unscaling, inf and -inf values are transformed back to, 
         respectively, the median of those greater than the uppq percentile 
         and the median of those lower than the lowq percentile.
@@ -164,16 +169,23 @@ class robout_scaler:
 
         # Get the descriptive stats of the so far normalized columns 
         # needed for the normalization step that makes mean=0 and std=1.
-        if self.standardization:
-            mea = dfn.mean()
-            std = dfn.std()
-            # apply standardization to df
+        
+        if self.normalization == 1:
+            mea = pd.Series(0, index=df.columns)
+            std = pd.Series(1, index=df.columns)
+        else: 
+            if not self.normalization:
+                # apply standardization to df
+                mea = dfn.mean()
+                std = dfn.std()
+            elif self.normalization == 2:
+                mea = pd.Series(0.5, index=df.columns)
+                std = pd.Series(0.5, index=df.columns)
+            else:
+                raise ValueError("normalization parameter must be 0, 1 or 2")
             dfn = dfn.apply(lambda v: v if stg[v.name] else \
                             (v-mea[v.name])/std[v.name], 
                             axis=0)
-        else:
-            mea = pd.Series(0, index=df.columns)
-            std = pd.Series(1, index=df.columns)
 
         # Generating the lambda functions (one for each column) used 
         # by the generic function that will scale any dataframes.

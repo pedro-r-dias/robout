@@ -3,16 +3,20 @@
 > Robust scaling for numeric data with outliers
 
 Welcome! This repository contains the code implementing a scaler preserving outliers 
-found in unscaled data. It does not discard outliers, it transforms them to an 
-acceptable proximity in relation to the higher density region of the scaled distribution. 
+found in unscaled data. It does not discard outliers, it transforms them to a 
+controllable proximity in relation to the higher density region of the scaled distribution. 
 It does that by applying sigmoid transformation after an initial data scaling using the 
 Robust Scaler as implemented in [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html): 
 *(x-median)/(percentile(uppq)-percentile(lowq)*.
  
-Thus, between *lowq* and *uppq* parameters, this scaling preserves linearity, whereas outsite, 
-it makes a non-linear transformation pushing the outliers to the linear region. Lastly, if 
-*standardization* parameter is set to **True**, the data is centered and standard deviation is 
-forced to 1 (the [standard scaling](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) procedure).
+Thus, between *lowq* and *uppq* parameters, this scaling preserves linearity, whereas outside, 
+it makes a non-linear transformation pushing the outliers to the linear region. 
+
+Lastly, if *normalization* parameter is set to **False** or **0**, the data is centered and 
+standard deviation is forced to 1 (the [standard scaling](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) 
+procedure). If normalization is set to **True** or **1**, the data is normalized to be in
+the interval between 0 and 1, else, if it is set to 2, the data is normalized to be in the 
+interval between 0 and 2. 
 
 Follows a small sample (first 5rows x 8cols) from the [testSample.csv](./tests/testSample.csv) file and a 
 violin plot of the first 8 variables before scaling.
@@ -42,6 +46,7 @@ After the Robout scaling (without standardization) the same sample and the violi
 
 ![Violin plots of scaled test data](./resources/fig2.png)
 
+
 After applying standardization, this is the result:
 
 | id                    |       time |     AA |     AB |     AC |     AD |     AE |     AF |     AG |     AH |
@@ -53,7 +58,7 @@ After applying standardization, this is the result:
 | x16587885833987648653 | 1515186000 |  1.786 | -0.659 | -0.651 |  0.574 |  0.401 |  0.675 | -0.544 | -0.562 |
 
 
-![Violin plots of scaled and standardized test data](./resources/fig3.png)
+![Violin plots of scaled and standardized test data](./resources/fig4.png)
 
 
 ## Installation
@@ -85,14 +90,14 @@ import robout as rbt
 
 df = pd.read_csv(".\\tests\\testSample.csv")
 
-rs = rbt.robout_scaler(standardization=True, ignore=["time"])
+rs = rbt.robout_scaler(normalization=0, ignore=["time"])
 scaled = rs.fit_transform(df)
 
 f, ax = plt.subplots(figsize=(20, 5))
 sns.violinplot(data=scaled.iloc[:,2:10])
 ```
 
-![Violin plots of scaled and standardized test data](./resources/fig3.png)
+![Violin plots of scaled and standardized test data](./resources/fig4.png)
 
 To revert the scaling use the inverse_transform method as follows:
 
@@ -110,9 +115,29 @@ unscaled.iloc[:5,:10]
 | x16587885833987648653 | 1515186000 | 10395 | -119 | -120 | 0.944 | 0.069466 | 1943 |    0 | -0     |
 
 
+## Comparison with other scaling methods
+
+### Robout scaler
+![Robout scaler](./resources/fig5.png)
+
+### Standard scaler
+![Standard scaler](./resources/fig6.png)
+
+### Robust Scaler
+![Robust Scaler](./resources/fig7.png)
+
+### MinMax Scaler
+![MinMax Scaler](./resources/fig8.png)
+
+### Fibonacci scaler
+![Fibonacci scaler](./resources/fig9.png)
 
 ## Release History
 
+* 0.1.1
+    * Documentation updates
+* 0.1.0
+    * Ready
 * 0.0.1
     * Work in progress
 
