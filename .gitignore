@@ -10,6 +10,6 @@ robout-pedro-r-dias/
 resources/.ipynb_checkpoints
 resources/__pycache__
 hints.txt
-conda/
 robout_scaler.ipynb
+conda/
 dist/
