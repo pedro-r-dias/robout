@@ -7,7 +7,7 @@ found in unscaled data. It does not discard outliers, it transforms them to a
 controllable proximity in relation to the higher density region of the scaled distribution. 
 It does that by applying sigmoid transformation after an initial data scaling using the 
 Robust Scaler as implemented in [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html): 
-*(x-median)/(percentile(uppq)-percentile(lowq)*.
+*(x-median)/(percentile(uppq)-percentile(lowq))*.
  
 Thus, between *lowq* and *uppq* parameters, this scaling preserves linearity, whereas outside, 
 it makes a non-linear transformation pushing the outliers to the linear region. 
@@ -16,7 +16,7 @@ Lastly, if *normalization* parameter is set to **False** or **0**, the data is c
 standard deviation is forced to 1 (the [standard scaling](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) 
 procedure). If normalization is set to **True** or **1**, the data is normalized to be in
 the interval between 0 and 1, else, if it is set to 2, the data is normalized to be in the 
-interval between 0 and 2. 
+interval between -1 and 1. 
 
 Follows a small sample (first 5rows x 8cols) from the [testSample.csv](./tests/testSample.csv) file and a 
 violin plot of the first 8 variables before scaling.
@@ -44,7 +44,7 @@ table4.table
 
 The installation of Robout scaler requires [Pandas](https://pandas.pydata.org/pandas-docs/stable/getting_started/install.html) and [Numpy](https://numpy.org/install/).
 
-The latest release of Robout scaler can be installed from [PyPI](https://pypi.org/project/robout/0.0.1/) using ``pip``:
+The latest release of Robout scaler can be installed from [PyPI](https://pypi.org/project/robout/0.1.1/) using ``pip``:
 
 ```sh
     pip install robout
